@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql
+    volumes:
+      - mysqldbdata:/var/lib/mysql
+      - ./scripts:/docker-entrypoint-initdb.d
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: mysql
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    environment:
+      MYSQL_ROOT_PASSWORD: "myroot@pwd"
+      MYSQL_USER: "netsampleusr"
+      MYSQL_PASSWORD: "mystrongusr@pwd"
+      MYSQL_DATABASE: "netsampledb"
+
+  adminer:
+    image: adminer
+    restart: always
+    container_name: adminer
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysqldbdata:
